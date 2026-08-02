@@ -1,0 +1,21 @@
+[
+  { "query": "update the continuance", "should_trigger": true },
+  { "query": "save a checkpoint before we stop for the day", "should_trigger": true },
+  { "query": "where are we on this project?", "should_trigger": true },
+  { "query": "what's still outstanding?", "should_trigger": true },
+  { "query": "write a CONTINUANCE.md for this repo", "should_trigger": true },
+  { "query": "record the current state so I can pick this up tomorrow", "should_trigger": true },
+  { "query": "what were we working on last session?", "should_trigger": true },
+  { "query": "we have a seamless-continuance.md, formalise it into the new structure", "should_trigger": true },
+  { "query": "I'm new to this repo - catch me up on where it stands", "should_trigger": true },
+
+  { "query": "update the README", "should_trigger": false },
+  { "query": "write a changelog for v2.0", "should_trigger": false },
+  { "query": "commit and push", "should_trigger": false },
+  { "query": "add a task to the todo list", "should_trigger": false },
+  { "query": "where is the config file?", "should_trigger": false },
+  { "query": "what does this function do?", "should_trigger": false },
+  { "query": "summarise this file for me", "should_trigger": false },
+  { "query": "what's the status of the build?", "should_trigger": false },
+  { "query": "run the tests", "should_trigger": false }
+]
