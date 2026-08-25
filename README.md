@@ -77,28 +77,23 @@ Most state files fail the same handful of ways. Each rule below exists to close 
 
 If your project already has `seamless-continuance.md`, `progress.md`, `STATUS.md`, `NOTES.md` or similar, the skill absorbs its content into the formal structure and **leaves the old file in place** — superseded, not deleted — and tells you it did. Supersession should be a decision you can see, not a silent replacement.
 
-## LESSONS.md update to Skill.md (25th August 2026)
+## When Lessons outgrows the file
 
-Updates to SKILL.md:
+Lessons is permanent and append-only, so on a long-lived project it's the one
+section that can push the file past 200 lines even after Past is fully
+compacted. When that happens, the skill splits Lessons into a sibling
+`LESSONS.md` at the repo root — every lesson moves, not just the oldest, since
+a lesson has no lossy shorthand the way a Past stub does. Numbers never
+change: Lesson 7 stays Lesson 7, because plans and commit messages already
+cite lessons by number. `CONTINUANCE.md` keeps a one-line pointer where the
+section used to be, and new lessons append directly to `LESSONS.md` from then
+on, so the split happens at most once per project. Because a citation to
+"Lesson 7" can predate the split, the skill checks both files whenever a
+lesson is asked about or referenced — a pointer means moved, not gone.
 
-  - The structure: added a note flagging that Lessons is the one section that can outgrow the cap even
-    with Past fully compacted, pointing to a new subsection.
-  - New "Splitting off LESSONS.md" subsection: full move (every lesson relocates, no partial window),
-    CONTINUANCE.md's ## Lessons becomes a permanent one-line pointer (See LESSONS.md (1–14).), numbers
-    never change, new lessons append straight to LESSONS.md going forward (pointer never repopulated), no
-    200-line cap on LESSONS.md itself, and — the redundancy rule you asked for — check both files
-    whenever a Lesson is cited or asked about.
-  - Reading flow: step 1 now says to read LESSONS.md too when the pointer is present and the question
-    touches a lesson or past decision.
-  - Updating flow: step 6 checks for LESSONS.md before deciding where to append a new lesson; new step 7
-    does the split, explicitly after Past/Present compaction and Lessons-prose trimming have been tried —
-    last resort, not first move.
-  - Anti-patterns table and "What this is not": added rows/bullets so the split doesn't become a default
-    second file for small projects.
-  - Reporting back: added a line to flag explicitly when an update performed the one-time split.
-
-  Didn't touch evals/trigger-set.json — it only tests whether the skill activates on a query, not this
-  internal behavior, so nothing there was affected.
+This is a last resort, not a default second file: it only triggers after Past
+is compacted, Present is tightened, and Lessons prose is already trimmed to
+its bolded claims. Most projects never grow into it.
 
 ## Installation
 
