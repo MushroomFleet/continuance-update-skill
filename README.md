@@ -77,6 +77,29 @@ Most state files fail the same handful of ways. Each rule below exists to close 
 
 If your project already has `seamless-continuance.md`, `progress.md`, `STATUS.md`, `NOTES.md` or similar, the skill absorbs its content into the formal structure and **leaves the old file in place** — superseded, not deleted — and tells you it did. Supersession should be a decision you can see, not a silent replacement.
 
+## LESSONS.md update to Skill.md (25th August 2026)
+
+Updates to SKILL.md:
+
+  - The structure: added a note flagging that Lessons is the one section that can outgrow the cap even
+    with Past fully compacted, pointing to a new subsection.
+  - New "Splitting off LESSONS.md" subsection: full move (every lesson relocates, no partial window),
+    CONTINUANCE.md's ## Lessons becomes a permanent one-line pointer (See LESSONS.md (1–14).), numbers
+    never change, new lessons append straight to LESSONS.md going forward (pointer never repopulated), no
+    200-line cap on LESSONS.md itself, and — the redundancy rule you asked for — check both files
+    whenever a Lesson is cited or asked about.
+  - Reading flow: step 1 now says to read LESSONS.md too when the pointer is present and the question
+    touches a lesson or past decision.
+  - Updating flow: step 6 checks for LESSONS.md before deciding where to append a new lesson; new step 7
+    does the split, explicitly after Past/Present compaction and Lessons-prose trimming have been tried —
+    last resort, not first move.
+  - Anti-patterns table and "What this is not": added rows/bullets so the split doesn't become a default
+    second file for small projects.
+  - Reporting back: added a line to flag explicitly when an update performed the one-time split.
+
+  Didn't touch evals/trigger-set.json — it only tests whether the skill activates on a query, not this
+  internal behavior, so nothing there was affected.
+
 ## Installation
 
 Drop the `continuance-update/` directory into your skills folder:
