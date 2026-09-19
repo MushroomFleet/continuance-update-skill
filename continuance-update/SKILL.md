@@ -44,8 +44,14 @@ updated: <YYYY-MM-DD> · <short sha> · <branch>
 Order is deliberate: **Past, Present, Future, Lessons.** A reader arriving cold
 wants the chronology. It only works because Past stays short — see below.
 
-**Target: the whole file under 200 lines.** If it grows past that, Past is not
-being compacted hard enough. A checkpoint nobody reads is worse than none.
+**Target: the whole file under 200 lines.** If it grows past that, Past is usually
+not being compacted hard enough. A checkpoint nobody reads is worse than none.
+
+On a long-lived project, Lessons is the one section that can outgrow the cap
+on its own even with Past fully compacted — it's permanent and append-only, so
+it has no lossy compaction to fall back on. When that happens, Lessons splits
+into a sibling `LESSONS.md`; see "Splitting off LESSONS.md" below. Most
+projects never need this — it's a last resort, not a default second file.
 
 ---
 
@@ -165,6 +171,52 @@ and then disproved is itself the lesson.
 section that collects everything gets skimmed, and then the useful ones are lost
 with the rest.
 
+### Splitting off LESSONS.md
+
+When the file is still at or near 200 lines **after** compacting Past,
+tightening Present, and trimming each lesson's narrative to what's
+non-obvious (the bolded claim stays; the story behind it gets shorter), split
+Lessons into a sibling file at the repo root:
+
+```markdown
+---
+project: <name>
+---
+
+# <name> — Lessons
+
+1. **Check the instrument before the code.** ...
+2. **A comment that contradicts the code is a bug report.** ...
+```
+
+Move **every** lesson, not just the oldest — a lesson is permanent, full-text,
+and numbered for citation, so there's no lossy version of it to leave behind
+the way a Past stub leaves detail behind in its planning artifact. Leave
+`## Lessons` in CONTINUANCE.md as a **permanent one-line pointer**:
+
+```markdown
+## Lessons
+
+See `LESSONS.md` (1–14).
+```
+
+This is a one-way, one-time move per project. Once split:
+
+- **Numbers never change.** Lesson 7 is Lesson 7 forever, now living in
+  `LESSONS.md`. Plans and commit messages cite lessons by number —
+  renumbering would break every live reference scattered across the repo.
+- **New lessons append to `LESSONS.md` directly**, continuing the same count,
+  and the range in the pointer is bumped to match. Never repopulate
+  CONTINUANCE.md's Lessons section — that just recreates the bloat the split
+  was meant to fix.
+- **The 200-line cap does not apply to `LESSONS.md`.** It's an archive, not a
+  checkpoint — no headmatter sha or branch to go stale. Keep entries lean with
+  the same discipline (bolded claim first, narrative trimmed to what's
+  non-obvious), but don't chase a line target there.
+- **Check both files when a Lesson is asked about or cited.** A reference to
+  "Lesson 7" predates the split as often as not — resolve it wherever the
+  numbering actually lives, don't assume which file holds it.
+
 ---
 
 ## Reading one — the other half of the job
@@ -174,7 +226,9 @@ with the rest.
 not a rewritten file.
 
 1. **Read `CONTINUANCE.md`** if it exists. Answer from it — Present first, then
-   the head of Future, then whatever they actually asked about.
+   the head of Future, then whatever they actually asked about. If its Lessons
+   section is a pointer to `LESSONS.md` and the question touches a lesson or
+   past decision, **read `LESSONS.md` too** — a pointer means moved, not gone.
 2. **Say when it was last updated.** The headmatter carries a date and a sha;
    if HEAD has moved a long way past that sha, **say so** — a checkpoint the
    project has outrun is worse than none, and the user needs to know which they
@@ -228,8 +282,15 @@ Then:
 3. **Rewrite Present** from the working tree and the conversation.
 4. **Touch Future only to tick or annotate.** Never resequence.
 5. **Compact Past** if it has grown past ~12 detailed stubs.
-6. **Append a Lesson** only if something was genuinely learned.
-7. **Stamp the headmatter** — date, new short sha, branch.
+6. **Append a Lesson** only if something was genuinely learned. Check for
+   `LESSONS.md` first — if the project has already split, append there and
+   continue its numbering; otherwise append to CONTINUANCE.md's own Lessons
+   section as before.
+7. **If the file is still at or near 200 lines** after steps 3 and 5, and
+   after trimming each lesson's narrative to what's non-obvious, split
+   Lessons into `LESSONS.md` now — see
+   "Splitting off LESSONS.md" above. Last resort, not the first move.
+8. **Stamp the headmatter** — date, new short sha, branch.
 
 ### The rule that keeps it honest
 
@@ -246,6 +307,8 @@ Then:
 - **Not a task tracker.** Future is a reading of the plans, not a replacement.
 - **Not a design document.** Reasoning lives in the planning artifacts.
 - **Not a place for detail.** Every line earns its space or it is compacted.
+- **Not two files by default.** `LESSONS.md` exists only for projects that
+  outgrew the cap even after compaction — most projects never need it.
 
 ---
 
@@ -258,7 +321,8 @@ Then:
 | Present describes last week | Not updated on stop | Update before ending a session, not before starting one |
 | A stub for uncommitted work | "Done" drifted from "committed" | Move it back to Present |
 | Lessons full of observations | Everything is being recorded | Only what changed a decision |
-| Over 200 lines | All of the above | Compact Past first, then trim Present |
+| Lessons still bloated after compaction | It's permanent and full-text — no lossy compaction left | Split into `LESSONS.md`, leave a pointer |
+| Over 200 lines | All of the above | Compact Past, trim Present, then split Lessons if still over |
 
 ---
 
@@ -269,7 +333,9 @@ After writing, tell the user:
 - **what moved** — which items were promoted, and on what evidence,
 - **what you did not touch** — Future's order, explicitly,
 - **anything that looked wrong** but was left alone,
-- the new line count, if it is near the limit.
+- the new line count, if it is near the limit,
+- **if this update split off `LESSONS.md`** — say so explicitly. It's a
+  one-time structural change, not a routine edit.
 
 A checkpoint the user has not read is one they cannot rely on. Say what changed
 so they do not have to diff it.

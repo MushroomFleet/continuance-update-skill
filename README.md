@@ -92,8 +92,8 @@ on, so the split happens at most once per project. Because a citation to
 lesson is asked about or referenced — a pointer means moved, not gone.
 
 This is a last resort, not a default second file: it only triggers after Past
-is compacted, Present is tightened, and Lessons prose is already trimmed to
-its bolded claims. Most projects never grow into it.
+is compacted, Present is tightened, and each lesson's narrative is already trimmed to
+what's non-obvious. Most projects never grow into it.
 
 ## Installation
 
@@ -125,8 +125,7 @@ continuance-update/
 ├── SKILL.md                 the skill itself — structure, rules, anti-patterns
 └── evals/
     ├── trigger-set.json     18 queries, 9 positive / 9 negative
-    ├── run_eval_win.py      Windows-capable trigger-rate harness
-    └── README.md            why not skill-creator's runner, and the baseline
+    └── run_eval_win.py      Windows-capable trigger-rate harness
 ```
 
 ## Trigger evals
@@ -145,7 +144,7 @@ python run_eval_win.py \
 
 The number worth knowing: before the two-jobs rewrite, the positive rate was **52%**. The original description framed the skill purely as a writing action, so instructions to *record* state fired at 100% while questions *about* state fired at **0%** — including "where are we on this project?". Listing those phrases in the description was not enough. The skill had to actually claim the reading job, which is why `SKILL.md` has a *Reading one* section.
 
-`evals/README.md` also documents why the stock `skill-creator` runner cannot produce a valid number on Windows — it reads the `claude -p` stream with `select.select()`, which accepts sockets only, so every query scores as "did not trigger" and the report comes back looking like a result. A skill that triggered on everything would score identically.
+The stock `skill-creator` runner cannot produce a valid number on Windows, which is why the harness here exists — it reads the `claude -p` stream with `select.select()`, which accepts sockets only, so every query scores as "did not trigger" and the report comes back looking like a result. A skill that triggered on everything would score identically.
 
 **n=3 is small.** A 67% or 33% is one run either way and sits inside the noise. Raise `--runs-per-query` before reading anything into a single-step difference.
 
@@ -155,6 +154,7 @@ The number worth knowing: before the two-jobs rewrite, the positive rate was **5
 - **Not a task tracker.** Future is a *reading* of the plans, not a replacement for them.
 - **Not a design document.** Reasoning lives in the planning artifacts.
 - **Not a place for detail.** Every line earns its space or it is compacted.
+- **Not two files by default.** `LESSONS.md` exists only for projects that outgrew the cap even after compaction.
 
 ## License
 
